@@ -5,6 +5,11 @@ const connectDB = require('./config/database');
 const User = require('./models/User');
 const Analytics = require('./models/Analytics');
 
+// Log environment for debugging
+console.log('NODE_ENV:', process.env.NODE_ENV);
+console.log('MONGODB_URI exists:', !!process.env.MONGODB_URI);
+console.log('MONGODB_URI:', process.env.MONGODB_URI?.substring(0, 50) + '...');
+
 // Routes
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
