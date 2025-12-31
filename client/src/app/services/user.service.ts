@@ -1,12 +1,13 @@
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  private url = 'http://localhost:5000/api/users';
+  private url = `${environment.apiUrl}/users`;
   private tok: string | null;
 
   constructor(private http: HttpClient) {
