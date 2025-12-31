@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { environment } from '../../../environments/environment';
 
 declare var google: any;
 
@@ -42,7 +43,7 @@ export class LoginComponent implements OnInit {
   initGoogle(): void {
     try {
       google.accounts.id.initialize({
-        client_id: '698935738598-lc2pbvqrds4dq0nv83m0q995evb7qup5.apps.googleusercontent.com',
+        client_id: environment.googleClientId,
         callback: (response: any) => this.handleGoogle(response),
       });
 
