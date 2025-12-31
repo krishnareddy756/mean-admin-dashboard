@@ -1,0 +1,81 @@
+<div class="users-container">
+  <div class="users-header">
+    <h1>User Management</h1>
+    <button mat-raised-button color="primary" class="action-btn csv-btn" (click)="exportCSV()">
+      <mat-icon>download</mat-icon>
+      Export CSV
+    </button>
+  </div>
+
+  <!-- Search -->
+  <mat-form-field class="search-field">
+    <mat-label>Search Users</mat-label>
+    <input matInput [(ngModel)]="search" (ngModelChange)="filter()" placeholder="Name or Email" />
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+
+  <!-- Users Table -->
+  <mat-card class="users-table-card">
+    <mat-card-content>
+      <table mat-table [dataSource]="data" matSort>
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+          <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+        </ng-container>
+
+        <!-- Email Column -->
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+          <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+        </ng-container>
+
+        <!-- Role Column -->
+        <ng-container matColumnDef="role">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Role</th>
+          <td mat-cell *matCellDef="let element">
+            <span class="role-badge" [class.admin]="element.role === 'Admin'">{{ element.role }}</span>
+          </td>
+        </ng-container>
+
+        <!-- Status Column -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+          <td mat-cell *matCellDef="let element">
+            <span class="status-badge" [class.active]="element.status === 'Active'">{{ element.status }}</span>
+          </td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button matTooltip="Edit" (click)="edit(element)" color="primary">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button
+              mat-icon-button
+              [matTooltip]="element.status === 'Active' ? 'Deactivate' : 'Activate'"
+              (click)="toggleStatus(element)"
+              color="accent"
+            >
+              <mat-icon>{{ element.status === 'Active' ? 'block' : 'check_circle' }}</mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="Delete" (click)="delete(element)" color="warn">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="cols"></tr>
+        <tr mat-row *matRowDef="let row; columns: cols;"></tr>
+      </table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Loading Spinner -->
+  <div *ngIf="loading" class="loading-overlay">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+</div>

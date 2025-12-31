@@ -1,0 +1,87 @@
+<div class="login-wrapper">
+  <div class="login-container">
+    <!-- Left Side - Branding -->
+    <div class="login-brand">
+      <div class="brand-content">
+        <mat-icon class="brand-icon">admin_panel_settings</mat-icon>
+        <h1>Admin Dashboard</h1>
+        <p class="brand-subtitle">Analytics & Reporting System</p>
+        <div class="brand-features">
+          <div class="feature">
+            <mat-icon>trending_up</mat-icon>
+            <span>Real-time Analytics</span>
+          </div>
+          <div class="feature">
+            <mat-icon>people</mat-icon>
+            <span>User Management</span>
+          </div>
+          <div class="feature">
+            <mat-icon>assessment</mat-icon>
+            <span>Data Visualization</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Side - Login Form -->
+    <div class="login-form">
+      <div class="form-container">
+        <h2>Welcome Back</h2>
+        <p class="form-subtitle">Sign in to continue</p>
+
+        <!-- Tabs for login method -->
+        <mat-tab-group class="login-tabs" [(selectedIndex)]="activeTab" (selectedIndexChange)="onTabChange($event)">
+          <!-- Email Login Tab -->
+          <mat-tab label="Email Login">
+            <div class="tab-content">
+              <form (ngSubmit)="loginWithEmail()" #emailForm="ngForm">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Email</mat-label>
+                  <input matInput type="email" name="email" [(ngModel)]="email" required />
+                  <mat-error>Email is required</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Password</mat-label>
+                  <input matInput type="password" name="password" [(ngModel)]="pwd" required />
+                  <mat-error>Password is required</mat-error>
+                </mat-form-field>
+
+                <button type="submit" mat-raised-button color="primary" [disabled]="loading" class="full-width">
+                  <mat-icon *ngIf="!loading">login</mat-icon>
+                  <mat-spinner diameter="20" *ngIf="loading" style="margin: 0 auto;"></mat-spinner>
+                  {{ loading ? 'Signing in...' : 'Sign In' }}
+                </button>
+
+                <p class="test-creds">Test Account: john@example.com (any password)</p>
+              </form>
+            </div>
+          </mat-tab>
+
+          <!-- Google Login Tab -->
+          <mat-tab label="Google Sign In">
+            <div class="tab-content">
+              <div class="signin-section">
+                <p class="google-info">Click the button below to sign in with your Google account</p>
+                <div id="googleSignInButton" class="google-button"></div>
+              </div>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+
+        <!-- Error Message -->
+        <div *ngIf="errMsg" class="error-message">
+          <mat-icon>error_outline</mat-icon>
+          <span>{{ errMsg }}</span>
+        </div>
+
+        <!-- Info Message -->
+        <div class="info-message">
+          <mat-icon>info</mat-icon>
+          <span>Admin access required. Only authorized users can login.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
